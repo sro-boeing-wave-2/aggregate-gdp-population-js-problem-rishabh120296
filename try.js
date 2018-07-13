@@ -6,20 +6,12 @@ const fs = require('fs');
 
 const countrymap = require('./country-continent');
 
-function fileRead(filepath) {
-  return new Promise((resolve, reject) => {
-    fs.readFile(filepath, 'utf8', (err, inputFile) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(inputFile);
-      }
-    });
-  });
-}
+
 // console.log(countrymap[0].country);
-const aggregate = async (filepath) => {
-  const inputFile = await fileRead(filepath);
+const aggregate = (filepath) => {
+  const inputFile = fs.readFileSync(filepath, 'utf8');
+
+  //  console.log(inputFile);
   function processData(allText) {
     const allTextLines = allText.split(/\r\n|\n/);
     const headers = allTextLines[0].split(',');
