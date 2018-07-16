@@ -61,38 +61,33 @@ const aggregate = async (filepath) => {
     ['Europe', 0, 0],
     ['Africa', 0, 0]];
 
-  const countryarray = Object.keys(countrymap);
   // console.log(countryarray);
   for (let i = 0; i < outputFile.length; i += 1) {
-    countryarray.forEach((element) => {
-      // console.log(outputFile[0][0]);
-      if (outputFile[i][0] === element) {
-        if (countrymap[element] === 'South America') {
-          finaloutput[0][1] += parseFloat(outputFile[i][7]);
-          finaloutput[0][2] += parseFloat(outputFile[i][4]);
-        }
-        if (countrymap[element] === 'Oceania') {
-          finaloutput[1][1] += parseFloat(outputFile[i][7]);
-          finaloutput[1][2] += parseFloat(outputFile[i][4]);
-        }
-        if (countrymap[element] === 'North America') {
-          finaloutput[2][1] += parseFloat(outputFile[i][7]);
-          finaloutput[2][2] += parseFloat(outputFile[i][4]);
-        }
-        if (countrymap[element] === 'Asia') {
-          finaloutput[3][1] += parseFloat(outputFile[i][7]);
-          finaloutput[3][2] += parseFloat(outputFile[i][4]);
-        }
-        if (countrymap[element] === 'Europe') {
-          finaloutput[4][1] += parseFloat(outputFile[i][7]);
-          finaloutput[4][2] += parseFloat(outputFile[i][4]);
-        }
-        if (countrymap[element] === 'Africa') {
-          finaloutput[5][1] += parseFloat(outputFile[i][7]);
-          finaloutput[5][2] += parseFloat(outputFile[i][4]);
-        }
-      }
-    });
+    // console.log(outputFile[0][0]);
+    if (countrymap[outputFile[i][0]] === 'South America') {
+      finaloutput[0][1] += parseFloat(outputFile[i][7]);
+      finaloutput[0][2] += parseFloat(outputFile[i][4]);
+    }
+    if (countrymap[outputFile[i][0]] === 'Oceania') {
+      finaloutput[1][1] += parseFloat(outputFile[i][7]);
+      finaloutput[1][2] += parseFloat(outputFile[i][4]);
+    }
+    if (countrymap[outputFile[i][0]] === 'North America') {
+      finaloutput[2][1] += parseFloat(outputFile[i][7]);
+      finaloutput[2][2] += parseFloat(outputFile[i][4]);
+    }
+    if (countrymap[outputFile[i][0]] === 'Asia') {
+      finaloutput[3][1] += parseFloat(outputFile[i][7]);
+      finaloutput[3][2] += parseFloat(outputFile[i][4]);
+    }
+    if (countrymap[outputFile[i][0]] === 'Europe') {
+      finaloutput[4][1] += parseFloat(outputFile[i][7]);
+      finaloutput[4][2] += parseFloat(outputFile[i][4]);
+    }
+    if (countrymap[outputFile[i][0]] === 'Africa') {
+      finaloutput[5][1] += parseFloat(outputFile[i][7]);
+      finaloutput[5][2] += parseFloat(outputFile[i][4]);
+    }
   }
   let jsonString = '{\n';
   for (let i = 0; i < finaloutput.length; i += 1) {
