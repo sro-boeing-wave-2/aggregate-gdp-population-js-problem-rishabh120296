@@ -109,6 +109,6 @@ const aggregate = async (filepath) => {
   await fileWrite('./output/output.json', jsonString);
 };
 
-//  aggregate('./data/datafile.csv');
+aggregate('./data/datafile.csv');
 
 module.exports = aggregate;

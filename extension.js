@@ -6,12 +6,32 @@ const fs = require('fs');
 
 const countrymap = require('./country-continent');
 
+function fileRead(filepath) {
+  return new Promise((resolve, reject) => {
+    fs.readFile(filepath, 'utf8', (err, inputFile) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(inputFile);
+      }
+    });
+  });
+}
 
+function fileWrite(filepath, jsonString) {
+  return new Promise((resolve, reject) => {
+    fs.writeFile(filepath, jsonString, (err) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(jsonString);
+      }
+    });
+  });
+}
 // console.log(countrymap[0].country);
-const aggregate = (filepath) => {
-  const inputFile = fs.readFileSync(filepath, 'utf8');
-
-  //  console.log(inputFile);
+const aggregate = async (filepath) => {
+  const inputFile = await fileRead(filepath);
   function processData(allText) {
     const allTextLines = allText.split(/\r\n|\n/);
     const headers = allTextLines[0].split(',');
@@ -50,28 +70,28 @@ const aggregate = (filepath) => {
       if (outputFile[i][0] === countrymap[j].country) {
         //  console.log(countrymap[j].continent);
         if (countrymap[j].continent === 'South America') {
-          finaloutput[0][1] += parseFloat(outputFile[i][7]);
-          finaloutput[0][2] += parseFloat(outputFile[i][4]);
+          finaloutput[0][1] += parseFloat(outputFile[i][13]) + parseFloat(outputFile[i][10]);
+          finaloutput[0][2] += parseFloat(outputFile[i][7]) + parseFloat(outputFile[i][4]);
         }
         if (countrymap[j].continent === 'Oceania') {
-          finaloutput[1][1] += parseFloat(outputFile[i][7]);
-          finaloutput[1][2] += parseFloat(outputFile[i][4]);
+          finaloutput[1][1] += parseFloat(outputFile[i][13]) + parseFloat(outputFile[i][10]);
+          finaloutput[1][2] += parseFloat(outputFile[i][7]) + parseFloat(outputFile[i][4]);
         }
         if (countrymap[j].continent === 'North America') {
-          finaloutput[2][1] += parseFloat(outputFile[i][7]);
-          finaloutput[2][2] += parseFloat(outputFile[i][4]);
+          finaloutput[2][1] += parseFloat(outputFile[i][13]) + parseFloat(outputFile[i][10]);
+          finaloutput[2][2] += parseFloat(outputFile[i][4]) + parseFloat(outputFile[i][7]);
         }
         if (countrymap[j].continent === 'Asia') {
-          finaloutput[3][1] += parseFloat(outputFile[i][7]);
-          finaloutput[3][2] += parseFloat(outputFile[i][4]);
+          finaloutput[3][1] += parseFloat(outputFile[i][13]) + parseFloat(outputFile[i][10]);
+          finaloutput[3][2] += parseFloat(outputFile[i][4]) + parseFloat(outputFile[i][7]);
         }
         if (countrymap[j].continent === 'Europe') {
-          finaloutput[4][1] += parseFloat(outputFile[i][7]);
-          finaloutput[4][2] += parseFloat(outputFile[i][4]);
+          finaloutput[4][1] += parseFloat(outputFile[i][13]) + parseFloat(outputFile[i][10]);
+          finaloutput[4][2] += parseFloat(outputFile[i][4]) + parseFloat(outputFile[i][7]);
         }
         if (countrymap[j].continent === 'Africa') {
-          finaloutput[5][1] += parseFloat(outputFile[i][7]);
-          finaloutput[5][2] += parseFloat(outputFile[i][4]);
+          finaloutput[5][1] += parseFloat(outputFile[i][13]) + parseFloat(outputFile[i][10]);
+          finaloutput[5][2] += parseFloat(outputFile[i][4]) + parseFloat(outputFile[i][7]);
         }
       }
     }
@@ -86,13 +106,9 @@ const aggregate = (filepath) => {
   jsonString += '}';
   //  console.log(jsonString);
   // preserve newlines, etc - use valid JSON
-
-  fs.writeFileSync('./output/output.json', jsonString, (err) => {
-    if (err) throw err;
-    //  console.log('Saved!');
-  });
+  await fileWrite('./output/output1.json', jsonString);
 };
 
-aggregate('./data/datafile.csv');
+aggregate('./data/datafile 2015.csv');
 
 module.exports = aggregate;
