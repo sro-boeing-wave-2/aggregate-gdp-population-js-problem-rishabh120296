@@ -17,6 +17,18 @@ function fileRead(filepath) {
     });
   });
 }
+
+function fileWrite(filepath, jsonString) {
+  return new Promise((resolve, reject) => {
+    fs.writeFile(filepath, jsonString, (err) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(jsonString);
+      }
+    });
+  });
+}
 // console.log(countrymap[0].country);
 const aggregate = async (filepath) => {
   const inputFile = await fileRead(filepath);
@@ -94,13 +106,9 @@ const aggregate = async (filepath) => {
   jsonString += '}';
   //  console.log(jsonString);
   // preserve newlines, etc - use valid JSON
-
-  fs.writeFileSync('./output/output.json', jsonString, (err) => {
-    if (err) throw err;
-    //  console.log('Saved!');
-  });
+  await fileWrite('./output/output.json', jsonString);
 };
 
-aggregate('./data/datafile.csv');
+//  aggregate('./data/datafile.csv');
 
 module.exports = aggregate;
